@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import com.haifeiWu.dao.SuspectDao;
 import com.haifeiWu.entity.PHCSMP_Dic_Action_Cause;
 import com.haifeiWu.entity.PHCSMP_Dic_IdentifyCard_Type;
+import com.haifeiWu.entity.PHCSMP_LogInfo;
 import com.haifeiWu.entity.PHCSMP_Suspect;
 import com.haifeiWu.service.SuspectService;
+import com.haifeiWu.utils.PageBean;
 
 /**
  * 登录犯罪嫌疑人信息的service实现类
@@ -171,10 +173,39 @@ public class SuspectServiceImple implements SuspectService {
 		String hql = "update PHCSMP_Suspect s set s.detain_Time=? where s.suspect_ID=?";
 		suspectDao.update(hql, hours, suspectID);
 	}
+
 	// @Override
 	// public PHCSMP_Suspect findByRemark(String remark) {
 	// // TODO Auto-generated method stub
 	// return suspectDao.findByPropertyName("remark", remark);
 	// }
+
+	/**
+	 * 历史嫌疑人分页显示 pageSize为每页显示的记录数 page为当前页页码
+	 */
+	@Override
+	public PageBean getPageBean(int pageSize, int page) {
+		PageBean pageBean = new PageBean();
+
+		String hql = "from PHCSMP_Suspect where process_Now=-1";
+
+		int allRows = suspectDao.getAllRowCount(hql);
+
+		int totalPage = pageBean.getTotalPages(pageSize, allRows);
+
+		int currentPage = pageBean.getCurPage(page);
+
+		int offset = pageBean.getCurrentPageOffset(pageSize, currentPage);
+
+		List<PHCSMP_LogInfo> list = suspectDao.queryByPage(hql, offset,
+				pageSize);
+
+		pageBean.setList(list);
+		pageBean.setAllRows(allRows);
+		pageBean.setCurrentPage(currentPage);
+		pageBean.setTotalPage(totalPage);
+
+		return pageBean;
+	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.haifeiWu.base.DaoSupport;
 import com.haifeiWu.entity.PHCSMP_Dic_Action_Cause;
 import com.haifeiWu.entity.PHCSMP_Dic_IdentifyCard_Type;
+import com.haifeiWu.entity.PHCSMP_LogInfo;
 import com.haifeiWu.entity.PHCSMP_Suspect;
 
 /**
@@ -14,6 +15,17 @@ import com.haifeiWu.entity.PHCSMP_Suspect;
  * @d2016年8月14日
  */
 public interface SuspectDao extends DaoSupport<PHCSMP_Suspect> {
+	
+	/**
+	 * 历史嫌疑人的分页显示
+	 * @param hql
+	 * @param offset
+	 * @param pageSize
+	 * @return
+	 */
+	public List<PHCSMP_LogInfo> queryByPage(String hql, int offset, int pageSize);
+
+	public int getAllRowCount(String hql);
 
 	/**
 	 * 根据RoomID查找用户信息

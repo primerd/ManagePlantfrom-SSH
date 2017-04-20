@@ -125,7 +125,7 @@
 
 			<form class="row">
 				<h1 class="col-lg-12 col-md-10 col-sm-12">
-					<img src="images/jinghui.png">&nbsp;&nbsp;&nbsp;&nbsp;离石区公安局嫌疑人入区报告
+					<img src="images/jinghui.png">&nbsp;&nbsp;&nbsp;&nbsp;交城县公安局嫌疑人入区报告
 				</h1>
 				<ul class="report col-lg-12 col-md-12 col-sm-10">
 					<li class="l1">档案编号：<input type="text"
@@ -143,7 +143,7 @@
 			<form class="row">
 				<h4 id="Person_info"
 					class="human_Mes col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					1、入区登记报告<span class="show">隐藏信息</span>
+					1、入区登记报告<!-- <span class="show">隐藏信息</span> -->
 				</h4>
 				<!--嫌疑人身份证信息-->
 				<div id="All_first">
@@ -246,7 +246,7 @@
 			<form class="row">
 				<h4 id="Person_safety"
 					class="human_Mes col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					2、人身安全检查 <span class="show1">显示信息</span>
+					2、人身安全检查 <!-- <span class="show1">显示信息</span> -->
 				</h4>
 				<div id="All_second">
 					<div class="row_1">
@@ -314,13 +314,13 @@
 						<p class="check_woods col-lg-12 col-md-10 col-sm-10"
 							style="font-size: 17px;">2.3&nbsp;随身财物检查登记</p>
 						<div>
-							<c:if test="${empty belongingS }">
+							<%-- <c:if test="${empty belongingS }">
 
 								<p
 									style="position: relative;margin-top:59px;left: 89px;top:-4px;width: 58%;color: #f00; text-align: left;padding-right: 367px;">该嫌疑人无随身财物检查登记记录</p>
 								<!-- <div style="margin-left: 12px;margin-top: 45px;">该嫌疑人无随身财物检查登记记录</div> -->
 							</c:if>
-							<c:if test="${!empty belongingS }">
+							<c:if test="${!empty belongingS }"> --%>
 							<table class="woods_check col-lg-12 col-md-10 col-sm-10">
 								<tr>
 									<td>序号</td>
@@ -344,6 +344,18 @@
 
 									</tr>
 								</c:forEach>
+								<c:if test="${empty belongingS }">
+									<tr>
+										<td>${item.belongingS_ID }</td>
+										<td>${item.belonging_Name }</td>
+										<td>${item.belonging_Number }</td>
+										<td>${item.belonging_Count }</td>
+										<td>${item.belonging_Unit }</td>
+										<td>${item.keeping_ID }</td>
+										<td>${item.cabinet_Number }</td>
+
+									</tr>
+								</c:if>
 							</table>
 
 						</div>
@@ -354,7 +366,7 @@
 								<li>涉案人员: ${suspect.suspect_Name }</li>
 							</ul>
 						</div>
-						</c:if>
+						<%-- </c:if> --%>
 					</div>
 
 				</div>
@@ -363,29 +375,32 @@
 			<form class="row">
 				<h4 id="Info_Collect"
 					class="human_Mes col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					3、信息采集报告<span class="show2">显示信息</span>
+					3、信息采集报告<!-- <span class="show2">显示信息</span> -->
 				</h4>
 				<div id="All_third">
-					<c:if test="${empty information_Collection }">
+					<%-- <c:if test="${empty information_Collection }">
 					<div
 							style="position: relative;left: 89px;top:23px;width: 41%;color: #f00">该嫌疑人无信息采集记录</div>
 					</c:if>
-					<c:if test="${!empty information_Collection }">
-					<table class="info_collect col-lg-12 col-md-10 col-sm-10"
-						style="margin-left: 80px;">
-						<tr>
-							<td style="width: 35px;">信息采集：</td>
-							<td style="width: 55px;">${information_Collection.is_Collected }</td>
-							<td style="width: 35px;">采集项目：</td>
-							<td style="width: 55px;">${information_Collection.collected_Item }</td>
-							<td style="width: 35px;">信息入库：</td>
-							<td style="width: 55px;">${information_Collection.is_Storaged }</td>
-							<td style="width: 35px;">检查对比：</td>
-							<td style="width: 55px;">${information_Collection.is_Checked }</td>
-						</tr>
+					<c:if test="${!empty information_Collection }"> --%>
+					
+					<table class="final_Leave col-lg-12 col-md-10 col-sm-10" style="width: 825px;position: relative;left: 50px;margin-top: 25px;height:50px;">
+								<tr>
 
-					</table>
-					</c:if>
+									<td style="text-align: center;">信息采集</td>
+									<td style="text-align: center;">采集项目</td>
+									<td style="text-align: center;">信息入库</td>
+									<td style="text-align: center;">检查对比</td>
+								</tr>
+								<tr>
+									<td>${information_Collection.is_Collected }</td>
+									<td>${information_Collection.collected_Item }</td>
+									<td>${information_Collection.is_Storaged }</td>
+									<td>${information_Collection.is_Checked }</td>
+								</tr>
+
+							</table>
+					<%-- </c:if> --%>
 					
 				</div>
 			</form>
@@ -393,15 +408,15 @@
 			<form class="row">
 				<h4 id="record_registr"
 					class="human_Mes col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					4、办案区活动记录<span class="show3">显示信息</span>
+					4、办案区活动记录<!-- <span class="show3">显示信息</span> -->
 				</h4>
 				<div id="All_forth">
-					<c:if test="${empty activity_Record }">
+					<%-- <c:if test="${empty activity_Record }">
 
 						<div
 							style="position: relative;left: 89px;top:23px;width: 41%;color: #f00">该嫌疑人无办案区活动记录</div>
 					</c:if>
-					<c:if test="${!empty activity_Record }">
+					<c:if test="${!empty activity_Record }"> --%>
 					<table class="active_check col-lg-12 col-md-10 col-sm-10">
 						<tr>
 							<td>序号</td>
@@ -424,26 +439,37 @@
 								<td>${item.remark }</td>
 							</tr>
 						</c:forEach>
+						<c:if test="${empty activity_Record }">
+							<tr>
+								<td>${item.activity_Record_ID }</td>
+								<td>${item.start_Time }</td>
+								<td>${item.end_Time }</td>
+								<td>${item.room_ID }</td>
+								<td>${item.activity_Record }</td>
+								<td>${item.vedio_Number }</td>
+								<td>${item.remark }</td>
+							</tr>
+						</c:if>
 					</table>
-					</c:if>
+					<%-- </c:if> --%>
 				</div>
 			</form>
 			<!--离开办案区登记-->
 			<form class="row">
 				<h4 id="Leave_depart"
 					class="human_Mes col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					5、离开办案区登记<span class="show4">显示信息</span>
+					5、离开办案区登记<!-- <span class="show4">显示信息</span> -->
 				</h4>
 				<div id="fifth">
 					<div class="row_1">
 						<p
 							style="color: #389AC7;margin-top: 6%;margin-left:6%;font-size: 17px;">临时离开办案区</p>
-						<c:if test="${empty temporaryLeaves }">
+						 <%-- <c:if test="${empty temporaryLeaves }"> 
 
 							<div
 								style="position: relative;left: 90px;top:0px;width: 41%;color: #f00">该嫌疑人无临时离区记录</div>
 						</c:if>
-							<c:if test="${!empty temporaryLeaves }">
+							<c:if test="${!empty temporaryLeaves }"> --%>
 						<table class="transient_Leave col-lg-12 col-md-10 col-sm-10">
 							<tr>
 								<td>序号</td>
@@ -463,23 +489,34 @@
 
 								</tr>
 							</c:forEach>
+							<c:if test="${empty temporaryLeaves }"> 
+								<tr>
+									<td>${item.temporary_Leave_Id }</td>
+									<td>${item.tempLeave_Time }</td>
+									<td>${item.tempLeave_Reason }</td>
+									<td>${item.staff_ID }</td>
+									<td>${item.return_Time }</td>
 
+
+								</tr>
+							</c:if>
 						</table>
-						</c:if>
+						<%-- </c:if> --%>
 					</div>
-					<hr style="margin-top: 33px;border: 1px solid darkgray;" />
+					
 					<!--最终离开办案区的信息表-->
 					<div class="row_1" style="margin-top: 20px;">
+					<p></p>
 						<p
-							style="color: #389AC7;margin-top: -1%;margin-left:6%;font-size: 17px;">最终离开办案区:</p>
-						<c:if test="${empty leave_Record }">
+							style="color: #389AC7;margin-top: 9%;margin-left:6%;font-size: 17px;">临时离开办案区</p>
+						<%-- <c:if test="${empty leave_Record }">
 
 							<div
 								style="position: relative;left: 90px;top:0px;width: 41%;color: #f00">该嫌疑人无办案区活动记录</div>
-						</c:if>
+						</c:if> --%>
 						<div>
 							<table class="final_Leave col-lg-12 col-md-10 col-sm-10">
-								<tr>
+								<tr style="background: #0070c0;color: #fff">
 
 									<td style="text-align: center;">最终离开时间</td>
 									<td style="text-align: center;">离开原因</td>

@@ -40,7 +40,7 @@
 			<a href="#checkedPerson" style="font-size: larger;">历史嫌疑人</a>
 		</div>
 		<hr style="width: 100%; border: 0.5px solid #389AC7; margin-top: 5%;" />
-		<div class="row" id="row2" style="height: 363px;overflow: hidden; ">
+		<div class="row" id="row2" style="overflow: hidden; ">
 			<h4 id="checkingPerson"
 				class="human_Mes col-lg-12 col-md-12 col-sm-12 col-xs-12">待查嫌疑人
 				&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
@@ -54,16 +54,20 @@
 					${fn:length(suspectCheckInfor)}人</td>
 				</tr> --%>
 			</table>
+			<c:if test="${fn:length(suspectCheckInfor) eq 0}">
+			<div style="color:red ;text-align:center ;font-size:20px">当前没有待查嫌疑人</div>
+			</c:if>
+			<c:if test="${fn:length(suspectCheckInfor) >0}">
 			<table class="wait_check col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<c:forEach items="${suspectCheckInfor}" var="item"
 					varStatus="status">
 					<c:if test="${status.count eq 1 || (status.count-1) % 5 eq 0}">
-						<tr>
+						<tr style="margin-top:20px">
 					</c:if>
 					<div style="float: left;">
-					<td style="width: 160px;" class="show1">
-					<div style="width: 150px; height: 250px; float: left;">
-						<div style="width:150px; float:left; margin-left: -1px;margin-top: 3%;">
+					<td style="width: 160px;" >
+					<div style="width: 150px; height: 250px; float: left;margin-bottom:20px"class="show1">
+						<div style="width:150px; float:left; margin-left: -1px;margin-top: 3%;" >
 							<img src="${item.identityCard_Photo}" style="width: 150px; height: 200px;"/>
 							<p >
 								${item.suspect_Name }<br />
@@ -81,14 +85,19 @@
 					</div>
 					<c:if test="${status.count % 5 eq 0 || status.count eq 5}">
 						</tr>
+						
 					</c:if>
 				</c:forEach>
 			</table>
+			</c:if>
 		</div>
-		<p id="more">
-			<input type="button" id="btn1" value="更多>>" style="background: none;border: 0px;"/>
-		</p>
-		<div class="row" id="row1" style="height: 313px; overflow: hidden; ">
+		
+		<c:if test="${fn:length(suspectCheckInfor) > 5}"> 
+			<p id="more">
+				<input type="button" id="btn1" value="更多>>" style="background: none;border: 0px;"/>
+			</p>
+		</c:if>
+		<div class="row" id="row1" style="height: 321px; overflow: hidden; ">
 			<h4 id="checkedPerson"
 				class="human_Mes col-lg-12 col-md-12 col-sm-12 col-xs-12">历史嫌疑人查询&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 				<font size="4" >入区人员统计时间：</font>
@@ -121,7 +130,7 @@
 						<td>${status.index+1 }</td>
 						<td><a href="./GR_loadInfor.action?personName=${item.suspect_Name }&suspectID=${item.suspect_ID}"
 									style="color:#f69d1f;font-size: large;">${item.suspect_Name }</a></td>
-						<td>${item.suspect_ID }</td>
+						<td><a href="${pageContext.request.contextPath }/GR_loadInfor.action?suspectID=${item.suspect_ID }"  target="rightFrame">${item.suspect_ID }<a></td>
 						<td>${item.enter_Time }</td>
 						<td>${item.detain_Time }</td>
 						<td>${item.suspected_Cause }</td>
@@ -132,9 +141,9 @@
 			</table>
 		</div>
 		<p id="more">
-				<input type="button" id="btn" value="更多>>" style="background: none;border: 0px;"/>
+				<a href="${pageContext.request.contextPath }/suspectManage_execute.action" target="rightFrame">更多>></a>
 		</p>
-		<div class="row_2 col-lg-12" style="height: 450px;"></div>
+		<div class="row_2 col-lg-12" style="height: 90px;"></div>
 	</div>
 	
 	<script type="text/javascript">

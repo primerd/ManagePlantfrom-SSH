@@ -11,6 +11,7 @@ import com.haifeiWu.base.DaoSupportImpl;
 import com.haifeiWu.dao.SuspectDao;
 import com.haifeiWu.entity.PHCSMP_Dic_Action_Cause;
 import com.haifeiWu.entity.PHCSMP_Dic_IdentifyCard_Type;
+import com.haifeiWu.entity.PHCSMP_LogInfo;
 import com.haifeiWu.entity.PHCSMP_Suspect;
 
 /**
@@ -247,6 +248,7 @@ public class SuspectDaoImple extends DaoSupportImpl<PHCSMP_Suspect> implements
 		update(hql, is_RecordVideo_DownLoad, identifyCard_Number);
 
 	}
+
 	// /**
 	// * 根据手环ID查询嫌疑人，新的需求中是否还需要对其他字段进行判断？（因为使用过同一ID的有多个嫌疑人）
 	// * 该方法需要更改
@@ -267,36 +269,91 @@ public class SuspectDaoImple extends DaoSupportImpl<PHCSMP_Suspect> implements
 	// tx.commit();// 提交事务
 	// return phcsmp_Suspect;
 	// }
-/**
- * 查询录像失败的嫌疑人信息
- */
+	/**
+	 * 查询录像失败的嫌疑人信息
+	 */
 	@Override
 	public List<PHCSMP_Suspect> findAllVideoDownloadFailSuspectInfor() {
-		
+
 		session = this.getSession();
 		tx = session.beginTransaction();// 开启事务
 		hql = "from PHCSMP_Suspect where  is_RecordVideo_DownLoad=0 and process_Now=-1 and recordVideo_State!=0";
 		Query query = session.createQuery(hql);
-		
+
 		@SuppressWarnings("unchecked")
 		List<PHCSMP_Suspect> phcsmp_Suspect = query.list();
 		tx.commit();// 提交事务
 		return phcsmp_Suspect;
-		
+
 	}
 
-@Override
-public List<PHCSMP_Suspect> findAllByIsRecordVedio() {
-	session = this.getSession();
-	tx = session.beginTransaction();// 开启事务
-	hql = "from PHCSMP_Suspect where is_RecordVideo_DownLoad=1";
-	Query query = session.createQuery(hql);
-	
-	@SuppressWarnings("unchecked")
-	List<PHCSMP_Suspect> phcsmp_Suspect = query.list();
-	tx.commit();// 提交事务
-	return phcsmp_Suspect;
-}
+	@Override
+	public List<PHCSMP_Suspect> findAllByIsRecordVedio() {
+		session = this.getSession();
+		tx = session.beginTransaction();// 开启事务
+		hql = "from PHCSMP_Suspect where is_RecordVideo_DownLoad=1";
+		Query query = session.createQuery(hql);
+
+		@SuppressWarnings("unchecked")
+		List<PHCSMP_Suspect> phcsmp_Suspect = query.list();
+		tx.commit();// 提交事务
+		return phcsmp_Suspect;
+	}
+
+	/**
+	 * 历史嫌疑人的分页显示
+	 */
+	@Override
+	public List<PHCSMP_LogInfo> queryByPage(String hql, int offset, int pageSize) {
+		Session session = this.getSession();
+		Transaction tx = null;
+		List<PHCSMP_LogInfo> list = null;
+
+		try {
+			tx = session.beginTransaction();
+
+			Query query = session.createQuery(hql).setFirstResult(offset)
+					.setMaxResults(pageSize);
+
+			list = query.list();
+
+			tx.commit();
+
+		} catch (Exception e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+
+			e.printStackTrace();
+		}
+		return list;
+
+	}
+
+	@Override
+	public int getAllRowCount(String hql) {
+		Session session = this.getSession();
+		Transaction tx = null;
+		int allRows = 0;
+		try {
+			tx = session.beginTransaction();
+
+			Query query = session.createQuery(hql);
+
+			allRows = query.list().size();
+
+			tx.commit();
+
+		} catch (Exception e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+
+			e.printStackTrace();
+		}
+
+		return allRows;
+	}
 
 	// /**
 	// * 调用DaoSupport中的save即可
@@ -373,6 +430,5 @@ public List<PHCSMP_Suspect> findAllByIsRecordVedio() {
 	// tx.commit();// 提交事务
 	// return phcsmp_Suspect;
 	// }
-
 
 }

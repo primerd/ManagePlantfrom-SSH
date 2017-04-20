@@ -5,6 +5,7 @@ import java.util.List;
 import com.haifeiWu.entity.PHCSMP_Dic_Action_Cause;
 import com.haifeiWu.entity.PHCSMP_Dic_IdentifyCard_Type;
 import com.haifeiWu.entity.PHCSMP_Suspect;
+import com.haifeiWu.utils.PageBean;
 
 /**
  * 登录犯罪嫌疑人信息的service
@@ -13,6 +14,14 @@ import com.haifeiWu.entity.PHCSMP_Suspect;
  * @d2016年8月14日
  */
 public interface SuspectService {
+	/**
+	 * 历史嫌疑人分页显示
+	 * @param pageSize
+	 * @param page
+	 * @return
+	 */
+	public PageBean getPageBean(int pageSize, int page);
+	
 	/**
 	 * 保存嫌疑人信息到数据库
 	 * 
@@ -23,6 +32,7 @@ public interface SuspectService {
 	public PHCSMP_Suspect findByBandID(int bandId);
 
 	public PHCSMP_Suspect findByRoomID(int roomId);
+	
 
 	/**
 	 * 获取数据库中的部分待查嫌疑人数据或者出区嫌疑人数据
